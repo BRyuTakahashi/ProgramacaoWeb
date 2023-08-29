@@ -21,10 +21,10 @@ public class HeroisController {
 
     @GetMapping("/{indice}")
     public Heroi imprimirHeroiIndice(@PathVariable Integer indice){
-        if(indiceInvalido(indice)) {
-            return null;
-        } else {
+        if(indiceValido(indice)) {
             return listaHerois.get(indice);
+        } else {
+            return null;
         }
     }
 
@@ -43,7 +43,7 @@ public class HeroisController {
 
     @GetMapping("/atualizar/{indice}/{nome}/{habilidade}/{idade}/{forca}/{vivo}")
     public Heroi atualizarHeroi(@PathVariable Integer indice, @PathVariable String nome, @PathVariable String habilidade, @PathVariable Integer idade, @PathVariable Integer forca, @PathVariable Boolean vivo){
-        if(indiceInvalido(indice)){
+        if(indiceValido(indice)){
             Heroi heroi = new Heroi(nome, idade, habilidade, forca, vivo);
             return listaHerois.set(indice, heroi);
         } else {
@@ -53,15 +53,15 @@ public class HeroisController {
 
     @GetMapping("/remover/{indice}")
     public String removerHeroi(@PathVariable Integer indice){
-        if(indiceInvalido(indice)){
-            return "Heroi não encontrado";
-        } else {
+        if(indiceValido(indice)){
             listaHerois.remove(indice);
             return "Heroi removido";
+        } else {
+            return "Heroi não encontrado";
         }
     }
 
-    private Boolean indiceInvalido(Integer indice){
-        return indice < 0 || indice >= listaHerois.size();
+    private Boolean indiceValido(Integer indice){
+        return indice > 0 && indice <= listaHerois.size();
     }
 }
