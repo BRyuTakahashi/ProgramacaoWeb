@@ -37,12 +37,13 @@ public class HeroiController {
     }
 
     @PutMapping("/{indice}")
-    public ResponseEntity<Heroi> atualizarHeroi(@PathVariable int indice, @PathVariable Heroi heroi){
+    public ResponseEntity<Heroi> atualizarHeroi(@PathVariable int indice, @RequestBody Heroi heroi){
         if(heroi.getNome().length() < 3 || heroi.getNome().isBlank()
                 || heroi.getHabilidade().length() < 3 || heroi.getHabilidade().isBlank()
                 || heroi.getIdade() <= 0
                 || heroi.getForca() <= 0 || heroi.getForca() >= 100
-                || indice < 0 || indice >= listaHerois.size()){
+                || indice < 0
+                || indice >= listaHerois.size()){
             return ResponseEntity.status(400).build();
         } else {
             listaHerois.set(indice, heroi);
